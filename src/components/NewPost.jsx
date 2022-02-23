@@ -14,30 +14,30 @@ export const NewPost = (props) => {
 
   async function onPostButtonClicked() {
     setIsPosting(true);
-    let tx = await arweave.createTransaction({ data:postValue })
+    let tx = await arweave.createTransaction({ data: postValue })
 
     tx.addTag('App-Name', 'PublicSquare')
     tx.addTag('Content-Type', 'text/plain')
     tx.addTag('Version', '1')
     tx.addTag('Type', 'post')
 
-    if(topicValue) {
+    if (topicValue) {
       tx.addTag('Topic', topicValue);
     }
-    
+
     try {
       let err = await arweave.transactions.sign(tx);
       if (err) {
         console.log(err.message);
         setIsPosting(false);
         return;
-      } 
+      }
     } catch (err) {
       console.log(err);
       setIsPosting(false);
       return;
     }
-    
+
     const response = await arweave.transactions.post(tx);
     console.log(response);
     setIsPosting(false);
@@ -60,10 +60,10 @@ export const NewPost = (props) => {
             readOnly={true}
           />
           <div className="newPost-postRow">
-          <div className="topic">
-              # 
+            <div className="topic">
+              #
               <input
-                type="text" 
+                type="text"
                 placeholder="topic"
                 className="topicInput"
                 value={topicValue}
@@ -71,7 +71,7 @@ export const NewPost = (props) => {
               />
             </div>
             <div >
-              <button 
+              <button
                 className="submitButton"
                 disabled={true}
               >
@@ -87,16 +87,16 @@ export const NewPost = (props) => {
           <TextareaAutosize
             value={postValue}
             onChange={e => setPostValue(e.target.value)}
-            rows="1" 
-            placeholder="What do you have to say?" 
+            rows="1"
+            placeholder="What do you have to say?"
           />
           <div className="newPost-postRow">
             <div className="topic"
-              style={{color: topicValue  && "rgb( 80, 162, 255)" }}
+              style={{ color: topicValue && "rgb( 80, 162, 255)" }}
             >
-              # 
+              #
               <input
-                type="text" 
+                type="text"
                 placeholder="topic"
                 className="topicInput"
                 value={topicValue}
@@ -104,9 +104,9 @@ export const NewPost = (props) => {
               />
             </div>
             <div >
-              <button 
+              <button
                 className="submitButton"
-                disabled={isDisabled} 
+                disabled={isDisabled}
                 onClick={onPostButtonClicked}
               >
                 Post

@@ -22,14 +22,14 @@ export const createPostData = (node) => {
     request: null,
   }
   postItem.request = arweave.api.get(`/${node.id}`, { timeout: 10000 })
-    .catch(() => { postItem.error = "timeout loading data"});
+    .catch(() => { postItem.error = "timeout loading data" });
   return postItem;
 }
 
-export const buildQuery = ({count, address, topic}) => {
-  
+export const buildQuery = ({ count, address, topic }) => {
+
   count = Math.min(100, count || 100);
-  
+
   let ownersFilter = '';
   if (address) {
     ownersFilter = `owners: ["${address}"],`
@@ -43,12 +43,13 @@ export const buildQuery = ({count, address, topic}) => {
     },`
   }
 
-  const queryObject = { query: `{
+  const queryObject = {
+    query: `{
     transactions(first: ${count}, ${ownersFilter}
       tags: [
         {
           name: "App-Name",
-          values: ["PublicSquare"]
+          values: ["ChattAR"]
         },
         {
           name: "Content-Type",
@@ -84,10 +85,10 @@ export const buildQuery = ({count, address, topic}) => {
 
 // in miliseconds
 var units = {
-  year  : 24 * 60 * 60 * 1000 * 365,
-  month : 24 * 60 * 60 * 1000 * 365/12,
-  day   : 24 * 60 * 60 * 1000,
-  hour  : 60 * 60 * 1000,
+  year: 24 * 60 * 60 * 1000 * 365,
+  month: 24 * 60 * 60 * 1000 * 365 / 12,
+  day: 24 * 60 * 60 * 1000,
+  hour: 60 * 60 * 1000,
   minute: 60 * 1000,
   second: 1000
 }
@@ -97,9 +98,9 @@ var rtf = new Intl.RelativeTimeFormat('en', { numeric: 'auto' })
 export const getRelativeTime = (ts1, ts2) => {
   var elapsed = ts1 - ts2
   // "Math.abs" accounts for both "past" & "future" scenarios
-  for (var u in units) 
-    if (Math.abs(elapsed) > units[u] || u === 'second') 
-      return rtf.format(Math.round(elapsed/units[u]), u)
+  for (var u in units)
+    if (Math.abs(elapsed) > units[u] || u === 'second')
+      return rtf.format(Math.round(elapsed / units[u]), u)
 }
 
 export const getPostTime = (timestamp) => {
@@ -112,9 +113,9 @@ export const getPostTime = (timestamp) => {
 export const abbreviateAddress = (address) => {
   if (!address)
     return address;
-  const firstFive = address.substring(0,5);
-  const lastFour = address.substring(address.length-4);
-  return `${firstFive}..${lastFour }`;
+  const firstFive = address.substring(0, 5);
+  const lastFour = address.substring(address.length - 4);
+  return `${firstFive}..${lastFour}`;
 }
 
 export const getTopicString = (input) => {
@@ -127,15 +128,15 @@ export const getTopicString = (input) => {
 }
 
 export const delay = (t) => {
-  return new Promise(function(resolve) {
-    setTimeout(function() {
+  return new Promise(function (resolve) {
+    setTimeout(function () {
       resolve();
     }, t);
   });
 }
 
 export const delayResults = (milliseconds, results) => {
-  return delay(milliseconds).then(function() {
+  return delay(milliseconds).then(function () {
     return results;
   });
 }

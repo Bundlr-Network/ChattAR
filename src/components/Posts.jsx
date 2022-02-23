@@ -19,7 +19,7 @@ const PostItem = (props) => {
   React.useEffect(() => {
     let newPostMessage = "";
     let newStatus = "";
-    
+
     if (!props.item.message) {
       setStatusMessage("loading...");
       let isCancelled = false;
@@ -45,7 +45,7 @@ const PostItem = (props) => {
       getMessage();
       return () => isCancelled = true;
     }
-    
+
   }, [props.item]);
 
   const renderTopic = (topic) => {

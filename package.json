@@ -1,9 +1,10 @@
 {
-  "name": "public-square-app",
+  "name": "ChattAR",
   "version": "0.1.0",
   "private": true,
   "homepage": ".",
   "dependencies": {
+    "@bundlr-network/client": "^0.5.15",
     "@testing-library/jest-dom": "^5.16.2",
     "@testing-library/react": "^12.1.2",
     "@testing-library/user-event": "^13.5.0",

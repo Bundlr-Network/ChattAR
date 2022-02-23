@@ -53,7 +53,7 @@ export const Navigation = () => {
     <nav>
       <div className="navHeader">
         {elephantIcon}
-        <div className="navLabel" style={{lineHeight: 2.2}}></div>
+        <div className="navLabel" style={{ lineHeight: 2.2 }}></div>
       </div>
       <Link to="/">
         {homeIcon}

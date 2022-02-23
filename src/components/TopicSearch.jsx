@@ -5,10 +5,10 @@ import { getTopicString } from '../lib/api';
 
 export const TopicSearch = (props) => {
 	const navigate = useNavigate();
-  function onTopicChanged(e) {
-    let input = e.target.value;
-    return getTopicString(input);
-  }
+	function onTopicChanged(e) {
+		let input = e.target.value;
+		return getTopicString(input);
+	}
 
 	const onTopicSearch = (topic) => {
 		navigate(`/topics/${topic}`);
@@ -18,12 +18,12 @@ export const TopicSearch = (props) => {
 	)
 	return (
 		<SearchInput
-		icon={hashIcon}
-		prompt="enter topic" 
-		searchInput={props.searchInput ? props.searchInput : ""}
-		isInputValid={input => input.length > 0} // Non 0 length input is valid
-    onInputChanged={onTopicChanged}
-		onSearch={onTopicSearch}
+			icon={hashIcon}
+			prompt="enter topic"
+			searchInput={props.searchInput ? props.searchInput : ""}
+			isInputValid={input => input.length > 0} // Non 0 length input is valid
+			onInputChanged={onTopicChanged}
+			onSearch={onTopicSearch}
 		/>
 	)
 }

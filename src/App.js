@@ -24,19 +24,19 @@ async function waitForNewPosts(txid) {
   }
 
   let i = posts.indexOf(foundPost);
-  posts.unshift(posts.splice(i,1)[0]);
+  posts.unshift(posts.splice(i, 1)[0]);
   return posts;
 }
 
 async function getPosts(ownerAddress, topic) {
-  const query = buildQuery({address: ownerAddress, topic});
+  const query = buildQuery({ address: ownerAddress, topic });
   const results = await arweave.api.post('/graphql', query)
     .catch(err => {
       console.error('GraphQL query failed', err);
       throw new Error(err);
     });
   const edges = results.data.data.transactions.edges;
-  return await delayResults(100,edges.map(edge => createPostData(edge.node)));
+  return await delayResults(100, edges.map(edge => createPostData(edge.node)));
 }
 
 const App = () => {
@@ -53,7 +53,7 @@ const App = () => {
 
   React.useEffect(() => {
     setIsSearching(true)
-    getPosts().then(items => { 
+    getPosts().then(items => {
       setPostItems(items);
       setIsSearching(false);
     });
@@ -69,12 +69,12 @@ const App = () => {
         <main>
           <Routes>
             <Route path="/" name="home" element={
-            <Home 
-              isWalletConnected={isWalletConnected}
-              isSearching={isSearching}
-              postItems={postItems}
-              onPostMessage={waitForPost}
-            />}
+              <Home
+                isWalletConnected={isWalletConnected}
+                isSearching={isSearching}
+                postItems={postItems}
+                onPostMessage={waitForPost}
+              />}
             />
             <Route path="/topics" element={<Topics />}>
               <Route path="/topics/" element={<TopicSearch />} />
@@ -134,7 +134,7 @@ const TopicResults = () => {
     setIsSearching(true);
     setTopicPostitems([]);
     try {
-      getPosts(null,topic).then(items => { 
+      getPosts(null, topic).then(items => {
         setTopicPostitems(items);
         setIsSearching(false);
       });
@@ -145,9 +145,9 @@ const TopicResults = () => {
   }, [topic])
   return (
     <>
-    <TopicSearch searchInput={topic} onSearch={onTopicSearch}/>
-    {isSearching && <ProgressSpinner />}
-    <Posts postItems={topicPostItems} />
+      <TopicSearch searchInput={topic} onSearch={onTopicSearch} />
+      {isSearching && <ProgressSpinner />}
+      <Posts postItems={topicPostItems} />
     </>
   )
 }
@@ -165,8 +165,8 @@ function UserResults() {
   React.useEffect(() => {
     setIsSearching(true);
     try {
-      getPosts(addr).then(items => { 
-        setUserPostItems(items); 
+      getPosts(addr).then(items => {
+        setUserPostItems(items);
         setIsSearching(false);
       });
     } catch (error) {
@@ -176,9 +176,9 @@ function UserResults() {
   }, [addr])
   return (
     <>
-    <UserSearch searchInput={addr} onSearch={onUserSearch}/>
-    {isSearching && <ProgressSpinner />}
-    <Posts postItems={userPostItems} />
+      <UserSearch searchInput={addr} onSearch={onUserSearch} />
+      {isSearching && <ProgressSpinner />}
+      <Posts postItems={userPostItems} />
     </>
   );
 };
