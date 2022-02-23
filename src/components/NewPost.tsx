@@ -16,7 +16,7 @@ export const NewPost = (props) => {
     setIsPosting(true);
     let tx = await arweave.createTransaction({ data: postValue })
 
-    tx.addTag('App-Name', 'PublicSquare')
+    tx.addTag('App-Name', 'ChattAR')
     tx.addTag('Content-Type', 'text/plain')
     tx.addTag('Version', '1')
     tx.addTag('Type', 'post')

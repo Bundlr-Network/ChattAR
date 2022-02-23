@@ -28,8 +28,8 @@ async function waitForNewPosts(txid) {
   return posts;
 }
 
-async function getPosts(ownerAddress, topic) {
-  const query = buildQuery({ address: ownerAddress, topic });
+async function getPosts(ownerAddress?, topic?) {
+  const query = buildQuery({ count: 0, address: ownerAddress, topic });
   const results = await arweave.api.post('/graphql', query)
     .catch(err => {
       console.error('GraphQL query failed', err);
@@ -139,7 +139,7 @@ const TopicResults = () => {
         setIsSearching(false);
       });
     } catch (error) {
-      console.logErrorg(error);
+      console.error(error);
       setIsSearching(false);
     }
   }, [topic])
@@ -170,7 +170,7 @@ function UserResults() {
         setIsSearching(false);
       });
     } catch (error) {
-      console.logErrorg(error);
+      console.error(error);
       setIsSearching(false);
     }
   }, [addr])
