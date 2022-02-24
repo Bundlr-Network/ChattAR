@@ -12,8 +12,8 @@ import './App.css';
 
 async function waitForNewPosts(txid) {
   let count = 0;
-  let foundPost = null;
-  let posts = [];
+  let foundPost;
+  let posts;
 
   while (!foundPost) {
     count += 1;
@@ -28,7 +28,16 @@ async function waitForNewPosts(txid) {
   return posts;
 }
 
-async function getPosts(ownerAddress?, topic?) {
+async function getPosts(ownerAddress?, topic?): Promise<{
+  txid: any;
+  owner: any;
+  topic: any;
+  height: any;
+  length: any;
+  timestamp: number;
+  request: any;
+  error: string;
+}[]> {
   const query = buildQuery({ count: 0, address: ownerAddress, topic });
   const results = await arweave.api.post('/graphql', query)
     .catch(err => {
@@ -41,7 +50,7 @@ async function getPosts(ownerAddress?, topic?) {
 
 const App = () => {
   const [isWalletConnected, setIsWalletConnected] = React.useState(false);
-  const [postItems, setPostItems] = React.useState([]);
+  const [postItems, setPostItems] = React.useState([] as any[]);
   const [isSearching, setIsSearching] = React.useState(false);
 
   async function waitForPost(txid) {
@@ -121,7 +130,7 @@ const Users = () => {
 };
 
 const TopicResults = () => {
-  const [topicPostItems, setTopicPostitems] = React.useState([]);
+  const [topicPostItems, setTopicPostitems] = React.useState([] as any[]);
   const [isSearching, setIsSearching] = React.useState(false);
   const { topic } = useParams();
   const navigate = useNavigate();
@@ -153,7 +162,7 @@ const TopicResults = () => {
 }
 
 function UserResults() {
-  const [userPostItems, setUserPostItems] = React.useState([]);
+  const [userPostItems, setUserPostItems] = React.useState([] as any[]);
   const [isSearching, setIsSearching] = React.useState(false);
   const { addr } = useParams();
   const navigate = useNavigate();

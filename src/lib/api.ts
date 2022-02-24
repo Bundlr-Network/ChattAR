@@ -19,8 +19,8 @@ export const createPostData = (node) => {
     height: height,
     length: node.data.size,
     timestamp: timestamp,
-    request: null,
-    error: null
+    request: null as any,
+    error: ""
   }
   postItem.request = arweave.api.get(`/${node.id}`, { timeout: 10000 })
     .catch(() => { postItem.error = "timeout loading data" });
@@ -100,10 +100,11 @@ export const getRelativeTime = (ts1, ts2) => {
   var elapsed = ts1 - ts2
   // "Math.abs" accounts for both "past" & "future" scenarios
   for (var u in units) {
-
-    if (Math.abs(elapsed) > units[u] || u === 'second')
+    if (Math.abs(elapsed) > units[u] || u === 'second') {
       return rtf.format(Math.round(elapsed / units[u]), u as any)
+    }
   }
+  return rtf.format(Math.round(elapsed / units["second"]), "second" as any)
 }
 
 export const getPostTime = (timestamp) => {

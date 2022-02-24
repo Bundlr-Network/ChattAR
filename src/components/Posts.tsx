@@ -49,9 +49,11 @@ const PostItem = (props) => {
 
   }, [props.item]);
 
-  const renderTopic = (topic) => {
-    if (topic)
+  const renderTopic = (topic:string) => {
+    if (topic){
       return (<Link to={`/topics/${topic}`} className="postTopic">#{topic}</Link>)
+    }
+    return;
   }
 
   return (
