@@ -9,6 +9,14 @@ import { TopicSearch } from './components/TopicSearch';
 import { UserSearch } from './components/UserSearch';
 import { arweave, buildQuery, createPostData, delay, delayResults } from './lib/api';
 import './App.css';
+// import { useToast } from '@chakra-ui/react';
+
+
+// const globalState ={
+//   wallet: {},
+//   currency: "test"
+// }
+// export const globalStateContext = React.createContext(globalState);
 
 async function waitForNewPosts(txid) {
   let count = 0;
@@ -53,6 +61,10 @@ const App = () => {
   const [postItems, setPostItems] = React.useState([] as any[]);
   const [isSearching, setIsSearching] = React.useState(false);
 
+
+  
+  // const toast = useToast()
+
   async function waitForPost(txid) {
     setIsSearching(true)
     let items = await waitForNewPosts(txid);
@@ -70,6 +82,7 @@ const App = () => {
 
   return (
     <div id="app">
+      {/* <globalStateContext.Provider value={globalState}> */}
       <div id="content">
         <aside>
           <Navigation />
@@ -96,6 +109,7 @@ const App = () => {
           </Routes>
         </main>
       </div>
+      {/* </globalStateContext.Provider> */}
     </div>
   );
 };

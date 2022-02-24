@@ -159,3 +159,27 @@
 	margin-top: 1.1em;
 	filter: invert(99%) sepia(70%) saturate(310%) hue-rotate(180deg) brightness(103%) contrast(85%);
 }
+
+.currencySelector {
+	font-weight: 400;
+  border-radius: 0;
+  font-size: 18px;
+  justify-content: space-between;
+	width: 100%;
+	background-color: transparent;
+	color: var(--color-text);
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  font-family: 'DM Sans', 'Roboto', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  height: 48px;
+  line-height: 48px;
+  padding: 0 24px 20px;
+}
+
+.currencySelector:hover {
+	background-color: rgb(79, 101, 126);
+}
