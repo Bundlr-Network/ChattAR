@@ -201,8 +201,8 @@ const WalletButton = (props) => {
 }
 
 const WalletModal = (props) => {
-  const {wallet, currency} = React.useContext(globalStateContext)
-  console.log(currency)
+  //const {wallet, currency} = React.useContext(globalStateContext)
+  //console.log(currency)
   async function connectWallet(walletName) {
     switch (walletName) {
       case AR_CONNECT:
