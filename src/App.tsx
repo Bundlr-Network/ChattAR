@@ -68,7 +68,7 @@ const App = () => {
         </aside>
         <main>
           <Routes>
-            <Route path="/" name="home" element={
+            <Route path="/" element={
               <Home
                 isWalletConnected={isWalletConnected}
                 isSearching={isSearching}

@@ -43,7 +43,8 @@ const PostItem = (props) => {
       }
 
       getMessage();
-      return () => isCancelled = true;
+      isCancelled = true;
+      // return () => isCancelled = true;
     }
 
   }, [props.item]);

@@ -25,18 +25,11 @@ export const NewPost = (props) => {
       tx.addTag('Topic', topicValue);
     }
 
-    try {
-      let err = await arweave.transactions.sign(tx);
-      if (err) {
+      await arweave.transactions.sign(tx).catch(err => {
         console.log(err.message);
         setIsPosting(false);
         return;
-      }
-    } catch (err) {
-      console.log(err);
-      setIsPosting(false);
-      return;
-    }
+      })
 
     const response = await arweave.transactions.post(tx);
     console.log(response);
@@ -87,7 +80,7 @@ export const NewPost = (props) => {
           <TextareaAutosize
             value={postValue}
             onChange={e => setPostValue(e.target.value)}
-            rows="1"
+            rows={1}
             placeholder="What do you have to say?"
           />
           <div className="newPost-postRow">
