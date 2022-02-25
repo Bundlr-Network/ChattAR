@@ -76,11 +76,13 @@ const WalletModal = (props) => {
       await bundlr.ready();
     } catch (err) {
       console.log(err);
+      toast(`Failed to load provider ${selectedProvider}`, { time: 10000 })
+      return;
     } //@ts-ignore
     if (!bundlr.address) {
       console.log("address is missing post init");
     }
-    toast(`Connected to node2.bundlr.network`)
+    toast(`Connected!`)
     props.onBundlrInit(bundlr)
     props.onClose()
   };
