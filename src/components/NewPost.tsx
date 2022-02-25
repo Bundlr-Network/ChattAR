@@ -2,7 +2,7 @@ import { WebBundlr } from '@bundlr-network/client/build/web';
 import React from 'react'
 import toast from 'react-simple-toasts';
 import TextareaAutosize from 'react-textarea-autosize';
-import { arweave, getTopicString } from '../lib/api';
+import { getTopicString } from '../lib/api';
 
 export const NewPost = (props) => {
   const [topicValue, setTopicValue] = React.useState("");
@@ -34,7 +34,7 @@ export const NewPost = (props) => {
 
     let tx = await bundlr.createTransaction(postValue, { tags })
     await tx.sign()
-    const txMeta = await tx.upload().catch(e =>{
+    await tx.upload().catch(e =>{
       console.log(`Error posting message - ${e.stackTrace ?? e}`)
       toast(`Error Posting message - ${e.message ?? e}`)
     })
