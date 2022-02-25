@@ -1,5 +1,9 @@
 import Arweave from 'arweave';
-export const arweave = Arweave.init({});
+export const arweave = Arweave.init({
+  host: "arweave.net",
+  protocol: "https",
+  port: 443
+});
 
 export const isWellFormattedAddress = (input) => {
   const re = /^[a-zA-Z0-9_]{43}$/;
