@@ -48,7 +48,7 @@ export const NewPost = (props) => {
   }
 
   let isDisabled = postValue === "";
-  console.log(props)
+
   if (props.bundlr) {
     if (isPosting) {
       return (

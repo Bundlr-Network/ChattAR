@@ -22,11 +22,10 @@ export const createPostData = (node) => {
     request: null as any,
     error: ""
   }
-  console.log(`getting id ${node.id}`)
+
   postItem.request = arweave.api.get(`/${node.id}`, { timeout: 10000 })
     .catch(() => { postItem.error = "timeout loading data" });
-  console.log("postItem")
-  console.log(postItem)
+
   return postItem;
 }
 

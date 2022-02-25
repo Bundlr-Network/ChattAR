@@ -78,7 +78,7 @@ const WalletModal = (props) => {
       console.log(err);
     } //@ts-ignore
     if (!bundlr.address) {
-      console.log("something went wrong");
+      console.log("address is missing post init");
     }
     toast(`Connected to node2.bundlr.network`)
     props.onBundlrInit(bundlr)

@@ -76,8 +76,7 @@ async function getPosts(ownerAddress?, topic?): Promise<{
     });
   const edges = results.data.data.transactions.edges;
   const res = await delayResults(100, edges.map(edge => createPostData(edge.node)));
-  console.log("res")
-  console.log(res)
+
   return res
 }
 
@@ -92,8 +91,7 @@ const App = () => {
 
   async function waitForPost(txid) {
     setIsSearching(true)
-    console.log("txid")
-    console.log(txid)
+
     let items = await waitForNewPosts(txid);
     setPostItems(items)
     setIsSearching(false);
