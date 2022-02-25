@@ -1,4 +1,6 @@
+import { WebBundlr } from '@bundlr-network/client/build/web';
 import React from 'react'
+import toast from 'react-simple-toasts';
 import TextareaAutosize from 'react-textarea-autosize';
 import { arweave, getTopicString } from '../lib/api';
 
@@ -14,25 +16,29 @@ export const NewPost = (props) => {
 
   async function onPostButtonClicked() {
     setIsPosting(true);
-    let tx = await arweave.createTransaction({ data: postValue })
+    const tags: any[] = [];
+    const bundlr = props.bundlr as WebBundlr;
+    
+    tags.push(
+      {name: "Application", value:"ChattAR" },
+      {name: "Content-Type", value: "text/plain"},
+      {name: "Version", value: "1"},
+      {name: "Type", value: "post"}
+    )
 
-    tx.addTag('App-Name', 'ChattAR')
-    tx.addTag('Content-Type', 'text/plain')
-    tx.addTag('Version', '1')
-    tx.addTag('Type', 'post')
 
     if (topicValue) {
-      tx.addTag('Topic', topicValue);
+      tags.push({name: "Topic", value: topicValue})
+
     }
 
-      await arweave.transactions.sign(tx).catch(err => {
-        console.log(err.message);
-        setIsPosting(false);
-        return;
-      })
+    let tx = await bundlr.createTransaction(postValue, { tags })
+    await tx.sign()
+    const txMeta = await tx.upload().catch(e =>{
+      console.log(`Error posting message - ${e.stackTrace ?? e}`)
+      toast(`Error Posting message - ${e.message ?? e}`)
+    })
 
-    const response = await arweave.transactions.post(tx);
-    console.log(response);
     setIsPosting(false);
     setPostValue("");
     setTopicValue("");
@@ -42,8 +48,8 @@ export const NewPost = (props) => {
   }
 
   let isDisabled = postValue === "";
-
-  if (props.isLoggedIn) {
+  console.log(props)
+  if (props.bundlr) {
     if (isPosting) {
       return (
         <div className="newPost">

@@ -28,16 +28,18 @@ const PostItem = (props) => {
         const response = await props.item.request;
         if (!response) {
           newStatus = props.item.error;
-        } else if (response.status && response.status === 200) {
+        } else if (response.status && (response.status === 200 || response.status === 202)) {
           props.item.message = response.data;
           newStatus = "";
           newPostMessage = response.data;
         } else {
           newStatus = "missing data";
         }
-
-        if (isCancelled)
+        if (isCancelled){
+          setStatusMessage(newStatus);
+          setPostMessage(newPostMessage);
           return;
+        }
         setStatusMessage(newStatus);
         setPostMessage(newPostMessage);
       }
@@ -46,6 +48,9 @@ const PostItem = (props) => {
       isCancelled = true;
       // return () => isCancelled = true;
     }
+
+    setStatusMessage(newStatus);
+    setPostMessage(newPostMessage);
 
   }, [props.item]);
 

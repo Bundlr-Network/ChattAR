@@ -334,7 +334,11 @@ module.exports = function (webpackEnv) {
         ]),
       ],
       fallback: {
-        buffer: require.resolve('buffer/')
+        buffer: require.resolve('buffer/'),
+        crypto: require.resolve("crypto/"),
+        path: false,
+        zlib: false,
+        process: require.resolve("process/browser"),
       }
     },
     module: {
@@ -750,6 +754,7 @@ module.exports = function (webpackEnv) {
       }),
       new webpack.ProvidePlugin({
         Buffer: ['buffer', 'Buffer'],
+        process: "process/browser"
       }),
     ].filter(Boolean),
     // Turn off performance processing because we utilize

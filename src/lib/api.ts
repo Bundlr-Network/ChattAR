@@ -12,7 +12,7 @@ export const createPostData = (node) => {
   const topicTag = node.tags && node.tags.find((a) => a.name === 'Topic');
   const topic = topicTag ? topicTag.value : null;
   const timestamp = node.block ? parseInt(node.block.timestamp, 10) * 1000 : -1;
-  const postItem = {
+  let postItem = {
     txid: node.id,
     owner: ownerAddress,
     topic: topic,
@@ -22,8 +22,11 @@ export const createPostData = (node) => {
     request: null as any,
     error: ""
   }
+  console.log(`getting id ${node.id}`)
   postItem.request = arweave.api.get(`/${node.id}`, { timeout: 10000 })
     .catch(() => { postItem.error = "timeout loading data" });
+  console.log("postItem")
+  console.log(postItem)
   return postItem;
 }
 
@@ -49,7 +52,7 @@ export const buildQuery = ({ count, address, topic }) => {
     transactions(first: ${count}, ${ownersFilter}
       tags: [
         {
-          name: "App-Name",
+          name: "Application",
           values: ["ChattAR"]
         },
         {

@@ -93,7 +93,7 @@
   list-style: none;
 }
 
-.select-button {
+.option {
 	font-weight: 400;
   border-radius: 0;
   font-size: 18px;
@@ -113,11 +113,11 @@
   padding: 0 24px;
 }
 
-.select-button:hover {
+.option:hover {
 	background-color: rgb(79, 101, 126);
 }
 
-.select-button p {
+.option p {
 	font-weight: 400;
 	font-family: 'DM Sans', 'Roboto', 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
@@ -177,9 +177,29 @@
   font-weight: 600;
   height: 48px;
   line-height: 48px;
-  padding: 0 24px 20px;
+  padding: 0 24px;
 }
 
 .currencySelector:hover {
 	background-color: rgb(79, 101, 126);
+}
+
+
+.connectButton {
+	background-color: transparent;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  font-family: 'DM Sans', 'Roboto', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  height: 48px;
+  line-height: 48px;
+  padding: 0 24px;
+	border-radius: 9999px;
+	border: solid 1px var(--color-text);
+	color: rgb(236, 233, 230);
+	margin-top: 1rem;
+	justify-content: center !important;
 }

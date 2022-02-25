@@ -9,14 +9,36 @@ import { TopicSearch } from './components/TopicSearch';
 import { UserSearch } from './components/UserSearch';
 import { arweave, buildQuery, createPostData, delay, delayResults } from './lib/api';
 import './App.css';
+import { WebBundlr } from '@bundlr-network/client/build/web/';
 // import { useToast } from '@chakra-ui/react';
 
-
+// // suboptimal global state handler - if you have a better way of doing this do PR.
 // const globalState ={
 //   wallet: {},
-//   currency: "test"
+//   currency: ""
 // }
-// export const globalStateContext = React.createContext(globalState);
+// export const globalStateContext = React.createContext(globalState as any);
+// const dispatchStateContext = React.createContext({} as any);
+
+// const GlobalStateProvider = ({ children }) => {
+//   const [state, dispatch] = React.useReducer(
+//     (state, newValue) => ({ ...state, ...newValue }),
+//     globalState
+//   );
+//   return (
+//     <globalStateContext.Provider value={state}>
+//       <dispatchStateContext.Provider value={dispatch}>
+//         {children}
+//       </dispatchStateContext.Provider>
+//     </globalStateContext.Provider>
+//   );
+// };
+
+// export const useGlobalState = () => [
+//   React.useContext(globalStateContext),
+//   React.useContext(dispatchStateContext)
+// ];
+
 
 async function waitForNewPosts(txid) {
   let count = 0;
@@ -53,12 +75,15 @@ async function getPosts(ownerAddress?, topic?): Promise<{
       throw new Error(err);
     });
   const edges = results.data.data.transactions.edges;
-  return await delayResults(100, edges.map(edge => createPostData(edge.node)));
+  const res = await delayResults(100, edges.map(edge => createPostData(edge.node)));
+  console.log("res")
+  console.log(res)
+  return res
 }
 
 const App = () => {
-  const [isWalletConnected, setIsWalletConnected] = React.useState(false);
-  const [postItems, setPostItems] = React.useState([] as any[]);
+  const [bundlr, setBundlr] = React.useState<WebBundlr>();
+  const [postItems, setPostItems] = React.useState<any[]>([]);
   const [isSearching, setIsSearching] = React.useState(false);
 
 
@@ -67,6 +92,8 @@ const App = () => {
 
   async function waitForPost(txid) {
     setIsSearching(true)
+    console.log("txid")
+    console.log(txid)
     let items = await waitForNewPosts(txid);
     setPostItems(items)
     setIsSearching(false);
@@ -82,17 +109,16 @@ const App = () => {
 
   return (
     <div id="app">
-      {/* <globalStateContext.Provider value={globalState}> */}
       <div id="content">
         <aside>
           <Navigation />
-          <WalletSelectButton onWalletConnect={() => setIsWalletConnected(true)} />
+          <WalletSelectButton onBundlrInit={setBundlr} onDisconnect={(_) =>{console.log("disconnecting!"); setBundlr(undefined)}} />
         </aside>
         <main>
           <Routes>
             <Route path="/" element={
               <Home
-                isWalletConnected={isWalletConnected}
+                bundlr={bundlr}
                 isSearching={isSearching}
                 postItems={postItems}
                 onPostMessage={waitForPost}
@@ -109,7 +135,6 @@ const App = () => {
           </Routes>
         </main>
       </div>
-      {/* </globalStateContext.Provider> */}
     </div>
   );
 };
@@ -118,7 +143,7 @@ const Home = (props) => {
   return (
     <>
       <header>Home</header>
-      <NewPost isLoggedIn={props.isWalletConnected} onPostMessage={props.onPostMessage} />
+      <NewPost bundlr={props.bundlr} onPostMessage={props.onPostMessage} />
       {props.isSearching && <ProgressSpinner />}
       <Posts postItems={props.postItems} />
     </>
