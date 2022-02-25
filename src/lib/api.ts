@@ -6,8 +6,7 @@ export const arweave = Arweave.init({
 });
 
 export const isWellFormattedAddress = (input) => {
-  const re = /^[a-zA-Z0-9_]{43}$/;
-  return re.test(input);
+  return input.length > 40;
 }
 
 export const createPostData = (node) => {
@@ -114,6 +113,7 @@ export const getRelativeTime = (ts1, ts2) => {
 }
 
 export const getPostTime = (timestamp) => {
+  console.log(timestamp)
   if (timestamp < 0) {
     return "pending...";
   }
